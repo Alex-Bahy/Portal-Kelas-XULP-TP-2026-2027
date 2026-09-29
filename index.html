@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Portal Akademik — X Usaha Layanan Pariwisata</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  /* ULP Palette — Tropical Teal × Sand × Coral × Gold */
+  --teal:#0D5C63;--teal2:#0F7180;--teal3:#17A2B8;
+  --sand:#F5EFE0;--sand2:#EDE3CE;--sand3:#DDD0B8;
+  --coral:#C1440E;--coral2:#E05A24;--coral3:#F07848;
+  --gold:#A07820;--gold2:#C8991A;--gold3:#EFC94C;
+  --ocean:#0A3D55;--ocean2:#145C7A;--ocean-bg:#E6F4F8;
+  --palm:#1A5C38;--palm2:#28854F;--palm-bg:#E5F2EB;
+  --sunset:#7A2020;--sunset-bg:#FCE8E8;
+  --bg:#F7F3EC;--surface:#FFFFFF;
+  --border:rgba(13,92,99,0.12);
+  --text:#1A2A24;--muted:#5A7070;
+  --r:14px;--r2:22px;
+  --nav-h:68px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+/* ── BATIK PATTERN SVG background ── */
+.batik-bg{
+  background-image:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'%3E%3Ccircle cx='40' cy='40' r='30'/%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3Ccircle cx='40' cy='40' r='10'/%3E%3Cpath d='M10 40 h60 M40 10 v60 M15 15 L65 65 M65 15 L15 65'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:80px 80px;
+}
+
+/* ────── FAB BACK ────── */
+.fab-back{
+  position:fixed;bottom:24px;right:24px;z-index:300;
+  display:flex;align-items:center;gap:8px;
+  background:var(--teal);color:#fff;
+  font-size:13px;font-weight:700;
+  padding:12px 20px;border-radius:40px;
+  text-decoration:none;
+  box-shadow:0 6px 28px rgba(13,92,99,.40);
+  border:1.5px solid rgba(255,255,255,.14);
+  transition:transform .2s,box-shadow .2s,background .2s;
+  white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.fab-back:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(13,92,99,.48);background:var(--teal2);}
+.fab-back svg{width:15px;height:15px;flex-shrink:0;}
+@media(max-width:480px){.fab-back{bottom:16px;right:16px;padding:10px 14px;font-size:12px;}}
+
+/* ────── HERO ────── */
+.hero{
+  background:linear-gradient(165deg,var(--ocean) 0%,var(--teal) 45%,var(--teal2) 75%,#0D8A80 100%);
+  position:relative;overflow:hidden;
+}
+.hero-pattern{position:absolute;inset:0;pointer-events:none;}
+.hero-wave-deco{
+  position:absolute;bottom:0;left:0;right:0;height:220px;pointer-events:none;opacity:.08;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,110 C180,180 360,40 540,110 C720,180 900,40 1080,110 C1260,180 1380,80 1440,110 L1440,220 L0,220Z' fill='white'/%3E%3Cpath d='M0,150 C200,80 400,200 600,140 C800,80 1000,190 1200,130 C1320,100 1390,160 1440,150 L1440,220 L0,220Z' fill='white' opacity='.5'/%3E%3C/svg%3E") center/cover no-repeat;
+}
+.hero-topography{
+  position:absolute;inset:0;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse cx='60' cy='60' rx='55' ry='30' stroke='white' stroke-width='1' fill='none'/%3E%3Cellipse cx='60' cy='60' rx='40' ry='20' stroke='white' stroke-width='1' fill='none'/%3E%3Cellipse cx='60' cy='60' rx='25' ry='12' stroke='white' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+  background-size:120px 120px;
+}
+.hero-glow{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 60% at 95% 10%,rgba(239,201,76,.22) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 50% at 5% 90%,rgba(26,92,56,.20) 0%,transparent 55%),
+    radial-gradient(ellipse 30% 40% at 50% 100%,rgba(193,68,14,.12) 0%,transparent 60%);
+}
+
+/* Palm leaf decorative SVG — top right */
+.hero-palms{
+  position:absolute;top:0;right:0;
+  width:clamp(180px,28vw,340px);height:100%;pointer-events:none;
+  opacity:.13;
+}
+.hero-palms svg{width:100%;height:100%;}
+
+/* ────── NAV ────── */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(16px,4vw,52px);height:var(--nav-h);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  position:sticky;top:0;z-index:100;
+  background:var(--ocean);
+  backdrop-filter:blur(14px);
+}
+.nav-brand{display:flex;align-items:center;gap:12px;min-width:0;flex:1;}
+.nav-logo{
+  width:42px;height:42px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;color:var(--ocean);letter-spacing:-.3px;
+  font-family:'Cormorant Garamond',serif;font-size:16px;
+}
+.nav-school{color:rgba(255,255,255,.90);font-size:13px;font-weight:600;line-height:1.3;min-width:0;overflow:hidden;}
+.nav-school .full{display:block;}
+.nav-school .short{display:none;}
+.nav-school span{display:block;font-size:11px;font-weight:400;color:rgba(255,255,255,.40);}
+.nav-year{
+  background:rgba(239,201,76,.18);
+  border:1px solid rgba(239,201,76,.35);
+  color:var(--gold3);
+  font-size:11px;font-weight:700;
+  padding:5px 13px;border-radius:20px;
+  letter-spacing:.06em;white-space:nowrap;flex-shrink:0;margin-left:10px;
+}
+@media(max-width:540px){
+  .nav-school .full{display:none;}
+  .nav-school .short{display:block;}
+  .nav-year{font-size:10px;padding:4px 9px;}
+}
+
+/* ────── HERO BODY ────── */
+.hero-body{
+  position:relative;z-index:2;
+  text-align:center;
+  padding:clamp(48px,8vw,90px) clamp(16px,5vw,48px) clamp(40px,6vw,68px);
+  max-width:840px;margin:0 auto;
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.70);
+  font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 18px;border-radius:20px;margin-bottom:24px;
+}
+.hero-pill-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--gold3);flex-shrink:0;
+  animation:pulse 2.4s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.75);}}
+
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,7vw,80px);
+  font-weight:600;
+  color:#fff;
+  line-height:1.02;
+  letter-spacing:-.5px;
+  margin-bottom:10px;
+}
+.hero-title em{font-style:italic;color:var(--gold3);}
+.hero-sub{
+  font-size:clamp(13px,2vw,15px);
+  color:rgba(255,255,255,.48);
+  line-height:1.85;
+  max-width:520px;margin:0 auto 40px;
+  font-weight:300;
+}
+/* destination chips */
+.dest-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:36px;}
+.dest-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.60);
+  font-size:11px;font-weight:500;
+  padding:5px 13px;border-radius:20px;
+}
+.stats{
+  display:flex;border-radius:20px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.07);
+  width:100%;max-width:480px;margin:0 auto;
+}
+.stat{flex:1;padding:clamp(14px,3vw,22px) clamp(10px,2vw,28px);text-align:center;border-right:1px solid rgba(255,255,255,.09);}
+.stat:last-child{border-right:none;}
+.stat-n{font-size:clamp(20px,4vw,32px);font-weight:700;color:#fff;line-height:1;font-family:'Cormorant Garamond',serif;}
+.stat-n b{color:var(--gold3);}
+.stat-l{font-size:10px;font-weight:500;color:rgba(255,255,255,.36);text-transform:uppercase;letter-spacing:.09em;margin-top:5px;}
+
+/* WAVE */
+.wave{line-height:0;position:relative;z-index:2;}
+.wave svg{display:block;width:100%;}
+
+/* ────── LAYOUT ────── */
+.wrap{max-width:1140px;margin:0 auto;padding:0 clamp(14px,4vw,44px);}
+.sec{padding:clamp(40px,5vw,72px) 0 0;}
+.sec-last{padding-bottom:clamp(56px,7vw,88px);}
+.sec-head{margin-bottom:clamp(22px,3vw,40px);}
+.sec-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:5px 14px;border-radius:20px;margin-bottom:10px;}
+.tag-ocean{background:var(--ocean-bg);color:var(--ocean);}
+.tag-palm{background:var(--palm-bg);color:var(--palm);}
+.tag-gold{background:#FDF5DA;color:#6B5010;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,44px);font-weight:600;color:var(--teal);line-height:1.10;margin-bottom:9px;}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.75;max-width:540px;font-weight:400;}
+
+/* ────── DATA HERO ────── */
+.data-hero{
+  background:linear-gradient(130deg,var(--ocean) 0%,var(--teal) 55%,#147A80 100%);
+  border-radius:var(--r2);
+  padding:clamp(22px,4vw,44px) clamp(20px,4vw,48px);
+  display:grid;grid-template-columns:1fr auto;
+  align-items:center;gap:24px;
+  position:relative;overflow:hidden;margin-bottom:24px;
+}
+.data-hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 55% 90% at 100% 50%,rgba(239,201,76,.18) 0%,transparent 60%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='25' stroke='rgba(255,255,255,0.04)' stroke-width='1' fill='none'/%3E%3Ccircle cx='30' cy='30' r='15' stroke='rgba(255,255,255,0.04)' stroke-width='1' fill='none'/%3E%3C/svg%3E") center/60px 60px repeat;
+}
+.data-hero-text{position:relative;z-index:1;}
+.data-hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(239,201,76,.18);
+  border:1px solid rgba(239,201,76,.35);
+  color:var(--gold3);
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 13px;border-radius:20px;margin-bottom:12px;
+}
+.data-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,3.2vw,32px);font-weight:600;color:#fff;line-height:1.15;margin-bottom:8px;}
+.data-hero-title em{font-style:italic;color:var(--gold3);}
+.data-hero-sub{font-size:12px;color:rgba(255,255,255,.48);line-height:1.7;margin-bottom:18px;font-weight:300;}
+.data-hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;}
+.data-hero-note{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:10px;padding:7px 13px;
+  font-size:11px;color:rgba(255,255,255,.52);font-weight:500;white-space:nowrap;
+}
+.data-hero-visual{
+  position:relative;z-index:1;
+  width:clamp(90px,12vw,155px);height:clamp(90px,12vw,155px);flex-shrink:0;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:20px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;
+}
+.big-icon{font-size:clamp(30px,5vw,50px);line-height:1;}
+.vis-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.09em;}
+.btn-data{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+  color:#0A3D55;
+  font-size:13px;font-weight:700;
+  padding:12px 22px;border-radius:12px;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:transform .15s,opacity .15s,box-shadow .15s;
+  font-family:'Jost',sans-serif;white-space:nowrap;touch-action:manipulation;
+  box-shadow:0 4px 16px rgba(160,120,32,.32);
+}
+.btn-data:hover{transform:translateY(-2px);opacity:.92;box-shadow:0 8px 24px rgba(160,120,32,.44);}
+.btn-data svg{width:14px;height:14px;flex-shrink:0;}
+@media(max-width:580px){.data-hero{grid-template-columns:1fr;}.data-hero-visual{display:none;}}
+
+/* ────── GROUP DIVIDER ────── */
+.group-div{
+  display:flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);
+  margin:clamp(24px,4vw,44px) 0 16px;
+}
+.group-div::after{content:'';flex:1;height:1px;background:var(--border);}
+.group-div-icon{
+  width:28px;height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+
+/* ────── SUBJECT GRID ────── */
+.subj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,295px),1fr));gap:13px;}
+
+/* ────── SUBJECT CARD ────── */
+.subj-card{
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:var(--r);
+  padding:17px 17px 14px;
+  display:flex;flex-direction:column;gap:12px;
+  position:relative;overflow:hidden;
+  transition:transform .22s,box-shadow .22s,border-color .22s;
+  -webkit-tap-highlight-color:transparent;
+}
+.subj-card:hover{transform:translateY(-4px);box-shadow:0 14px 44px rgba(13,92,99,.12);border-color:rgba(13,92,99,.24);}
+
+/* wave accent top bar */
+.subj-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3.5px;}
+.card-u::after{background:linear-gradient(90deg,var(--ocean),var(--teal2));}
+.card-k::after{background:linear-gradient(90deg,var(--palm),var(--palm2));}
+.card-l::after{background:linear-gradient(90deg,var(--gold),var(--gold2));}
+
+/* subtle ocean ripple on hover */
+.subj-card::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 120%,rgba(13,92,99,.04) 0%,transparent 70%);
+  opacity:0;transition:opacity .35s;
+}
+.subj-card:hover::before{opacity:1;}
+
+.card-row{display:flex;align-items:flex-start;gap:12px;}
+.card-num{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;
+  font-family:'Cormorant Garamond',serif;font-size:14px;
+}
+.card-u .card-num{background:var(--ocean-bg);color:var(--ocean);}
+.card-k .card-num{background:var(--palm-bg);color:var(--palm);}
+.card-l .card-num{background:#FDF5DA;color:#6B5010;}
+.card-info{flex:1;min-width:0;}
+.card-name{font-size:13px;font-weight:600;color:var(--text);line-height:1.38;margin-bottom:3px;}
+.card-type{font-size:11px;font-weight:600;letter-spacing:.04em;}
+.card-u .card-type{color:var(--ocean2);}
+.card-k .card-type{color:var(--palm2);}
+.card-l .card-type{color:var(--gold);}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+
+/* ────── LINK BUTTON ────── */
+.link-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:10px;
+  font-size:12px;font-weight:700;text-decoration:none;
+  letter-spacing:.01em;
+  transition:transform .15s,opacity .15s,box-shadow .15s;
+  white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.link-btn:hover{transform:translateY(-1px);opacity:.85;}
+.link-on{background:var(--teal);color:#fff;box-shadow:0 3px 12px rgba(13,92,99,.26);}
+.link-on:hover{box-shadow:0 6px 20px rgba(13,92,99,.38);}
+.link-off{background:#EEF0EF;color:#A8C0C0;pointer-events:none;cursor:not-allowed;}
+.link-btn svg{width:12px;height:12px;flex-shrink:0;}
+.badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:8px;letter-spacing:.04em;text-transform:uppercase;}
+.badge-on{background:#DCF5EB;color:#1A5C3A;}
+.badge-off{background:#E8F5F5;color:#4A8090;}
+
+/* ────── EDIT PANEL ────── */
+.card-edit-btn{
+  position:absolute;top:14px;right:14px;
+  width:29px;height:29px;border-radius:9px;
+  background:var(--ocean-bg);
+  border:1px solid rgba(10,61,85,.15);
+  color:var(--ocean);
+  font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  opacity:0;transition:opacity .2s,transform .15s,background .15s;
+  z-index:5;
+}
+.subj-card:hover .card-edit-btn{opacity:1;}
+.card-edit-btn:hover{transform:scale(1.1);background:var(--teal);color:#fff;}
+.edit-panel{
+  display:none;flex-direction:column;gap:9px;
+  background:var(--ocean-bg);
+  border:1.5px solid rgba(10,61,85,.16);
+  border-radius:11px;padding:12px 14px;
+  animation:slideDown .2s ease;
+}
+.edit-panel.open{display:flex;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.edit-panel label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ocean);}
+.edit-panel-row{display:flex;gap:6px;flex-wrap:wrap;}
+.edit-inp{
+  flex:1;min-width:120px;
+  border:1.5px solid rgba(10,61,85,.20);
+  border-radius:9px;padding:8px 11px;
+  font-size:12px;font-weight:500;
+  font-family:'Jost',sans-serif;
+  color:var(--teal);outline:none;background:#fff;
+  transition:border-color .2s;-webkit-appearance:none;
+}
+.edit-inp:focus{border-color:var(--teal2);}
+.edit-inp::placeholder{color:#BECACF;}
+.edit-save-btn{
+  padding:8px 13px;border-radius:9px;background:var(--teal);color:#fff;
+  font-size:12px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;
+  font-family:'Jost',sans-serif;transition:opacity .15s,transform .15s;touch-action:manipulation;
+}
+.edit-save-btn:hover{opacity:.88;transform:translateY(-1px);}
+.edit-clear-btn{
+  padding:8px 11px;border-radius:9px;background:#FDECEA;color:#991B1B;
+  font-size:12px;font-weight:700;border:none;cursor:pointer;
+  font-family:'Jost',sans-serif;transition:opacity .15s;touch-action:manipulation;
+}
+.edit-clear-btn:hover{opacity:.8;}
+.edit-hint{font-size:10px;color:var(--muted);line-height:1.6;}
+
+/* ────── TOAST ────── */
+#toast{
+  position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--teal);color:#fff;
+  padding:10px 22px;border-radius:40px;
+  font-size:13px;font-weight:600;
+  box-shadow:0 8px 32px rgba(13,92,99,.34);
+  opacity:0;pointer-events:none;
+  transition:opacity .3s,transform .3s;
+  z-index:500;white-space:nowrap;
+  max-width:88vw;overflow:hidden;text-overflow:ellipsis;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ────── MODAL ────── */
+#modal{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(8,20,28,.76);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+#modal.open{opacity:1;pointer-events:all;}
+.modal-box{
+  background:#fff;border-radius:24px;
+  padding:clamp(24px,4vw,44px) clamp(20px,4vw,40px) clamp(20px,3vw,36px);
+  max-width:400px;width:100%;text-align:center;
+  transform:scale(.93) translateY(14px);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  position:relative;max-height:92vh;overflow-y:auto;
+  border:1.5px solid var(--sand2);
+}
+#modal.open .modal-box{transform:scale(1) translateY(0);}
+.modal-close{
+  position:absolute;top:14px;right:16px;
+  background:none;border:none;cursor:pointer;
+  font-size:20px;color:#BBB;line-height:1;padding:4px;
+  -webkit-tap-highlight-color:transparent;
+}
+.modal-close:hover{color:#666;}
+.modal-icon{
+  width:64px;height:64px;border-radius:20px;margin:0 auto 18px;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal2) 100%);
+  display:flex;align-items:center;justify-content:center;font-size:28px;
+  box-shadow:0 8px 24px rgba(13,92,99,.28);
+}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--teal);margin-bottom:7px;}
+.modal-sub{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:22px;font-weight:400;}
+.modal-label{text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:8px;}
+.modal-inp-wrap{position:relative;margin-bottom:14px;}
+.modal-inp{
+  width:100%;border:1.5px solid #D8E4E4;border-radius:12px;
+  padding:14px 46px 14px 18px;
+  font-size:16px;letter-spacing:.06em;
+  font-family:'Jost',sans-serif;color:var(--teal);
+  outline:none;transition:border-color .2s;-webkit-appearance:none;
+}
+.modal-inp:focus{border-color:var(--teal2);}
+.modal-inp::placeholder{letter-spacing:0;color:#B8CECE;font-size:14px;}
+.modal-eye{
+  position:absolute;right:13px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:18px;color:#CCC;
+  transition:color .2s;padding:4px;
+}
+.modal-eye:hover{color:#888;}
+.modal-btn{
+  width:100%;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal2) 100%);
+  border:none;border-radius:12px;padding:14px;
+  font-size:14px;font-weight:700;color:#fff;cursor:pointer;
+  font-family:'Jost',sans-serif;
+  transition:transform .15s,opacity .15s,box-shadow .15s;touch-action:manipulation;
+  box-shadow:0 4px 16px rgba(13,92,99,.30);
+}
+.modal-btn:hover{transform:translateY(-1px);opacity:.92;box-shadow:0 8px 24px rgba(13,92,99,.40);}
+.modal-err{margin-top:11px;font-size:12px;color:#DC2626;display:none;animation:shake .35s ease;}
+.modal-err.show{display:block;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* ────── DESTINATION BANNER ────── */
+.dest-banner{
+  display:flex;align-items:stretch;gap:0;
+  border-radius:20px;overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--surface);
+  margin-bottom:8px;
+}
+.dest-item{
+  flex:1;padding:18px 16px;text-align:center;
+  border-right:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.dest-item:last-child{border-right:none;}
+.dest-item::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--gradient,linear-gradient(90deg,var(--teal),var(--teal2)));
+}
+.dest-emoji{font-size:24px;margin-bottom:6px;line-height:1;}
+.dest-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);}
+@media(max-width:520px){.dest-banner{display:none;}}
+
+/* ────── FOOTER ────── */
+footer{
+  background:linear-gradient(135deg,var(--ocean) 0%,var(--teal) 100%);
+  padding:clamp(28px,4vw,44px) clamp(16px,4vw,52px);
+  text-align:center;color:rgba(255,255,255,.32);font-size:12px;line-height:2;
+  position:relative;overflow:hidden;
+}
+footer::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='25' stroke='rgba(255,255,255,0.04)' stroke-width='1' fill='none'/%3E%3C/svg%3E") center/60px 60px repeat;
+}
+footer strong{color:rgba(255,255,255,.70);}
+footer .footer-divider{width:40px;height:1px;background:rgba(255,255,255,.15);margin:12px auto;}
+footer .footer-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-style:italic;
+  color:rgba(255,255,255,.18);
+  letter-spacing:-.3px;margin-bottom:4px;
+}
+
+/* touch devices: always show edit btn */
+@media(hover:none){
+  .card-edit-btn{opacity:1;}
+  .subj-card:hover{transform:none;box-shadow:none;}
+}
+
+/* card entrance animation */
+.subj-card{opacity:0;transform:translateY(18px);}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- FAB KEMBALI -->
+<a class="fab-back" href="https://alex-bahy.github.io/Dashboard-Penginputan-Nilai-Semester-Genap-TP-2025-2026/" target="_blank" rel="noopener" aria-label="Kembali ke Dashboard">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M10 3L5 8l5 5"/></svg>
+  Kembali ke Dashboard
+</a>
+
+<!-- MODAL PASSWORD -->
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Tutup">✕</button>
+    <div class="modal-icon">🗺️</div>
+    <div class="modal-title" id="modalTitle">Akses Wali Kelas</div>
+    <div class="modal-sub">Halaman ini khusus untuk Wali Kelas dalam menginput dan mengelola data siswa X ULP. Masukkan kata sandi untuk melanjutkan.</div>
+    <div class="modal-label">Kata Sandi Wali Kelas</div>
+    <div class="modal-inp-wrap">
+      <input type="password" id="pwInput" class="modal-inp" placeholder="Masukkan kata sandi…" onkeydown="if(event.key==='Enter')tryUnlock()">
+      <button class="modal-eye" onclick="togglePw()" id="eyeBtn" title="Tampilkan">👁</button>
+    </div>
+    <button class="modal-btn" onclick="tryUnlock()">🔓 &nbsp; Masuk ke Data Siswa</button>
+    <div class="modal-err" id="modalErr">⚠ Kata sandi salah. Silakan coba lagi.</div>
+  </div>
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<header class="hero">
+  <div class="hero-topography"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-wave-deco"></div>
+
+  <!-- Palm leaf deco -->
+  <div class="hero-palms">
+    <svg viewBox="0 0 340 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- palm trunk -->
+      <path d="M170 600 C165 500 155 420 160 350 C163 300 175 270 170 220" stroke="white" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <!-- palm fronds -->
+      <path d="M170 220 C140 200 90 170 50 150 C80 165 130 185 170 220" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M170 220 C200 195 250 165 295 140 C260 158 210 185 170 220" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M170 220 C155 185 140 130 135 80 C140 115 155 170 170 220" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M170 220 C185 185 200 130 205 75 C200 110 185 168 170 220" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M170 220 C130 205 75 200 30 210 C70 202 125 200 170 220" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M170 220 C210 205 265 198 310 205 C270 200 215 200 170 220" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <!-- leaf details -->
+      <path d="M50 150 C70 145 110 155 140 200" stroke="white" stroke-width="1" fill="none" opacity=".5"/>
+      <path d="M295 140 C275 138 235 150 200 195" stroke="white" stroke-width="1" fill="none" opacity=".5"/>
+      <!-- second palm -->
+      <path d="M310 600 C308 510 305 440 300 380 C298 340 295 300 290 260" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M290 260 C260 240 220 215 185 200 C210 215 255 238 290 260" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M290 260 C315 238 340 210 360 185 C338 208 315 235 290 260" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M290 260 C280 225 275 175 278 130 C278 165 280 218 290 260" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M290 260 C300 225 310 175 308 125 C307 160 300 218 290 260" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-logo">ULP</div>
+      <div class="nav-school">
+        <span class="full">X Usaha Layanan Pariwisata</span>
+        <span class="short">X ULP</span>
+        <span>SMK · Portal Akademik Guru</span>
+      </div>
+    </div>
+    <div class="nav-year">TP 2025/2026</div>
+  </nav>
+
+  <div class="hero-body">
+    <div class="hero-pill"><span class="hero-pill-dot"></span>Portal Nilai &amp; Akademik</div>
+    <h1 class="hero-title">Nilai &amp; Rekap<br><em>Kelas X ULP</em></h1>
+    <p class="hero-sub">Platform input dan rekap nilai mata pelajaran untuk semua guru, serta pengelolaan data siswa khusus Wali Kelas — profesional, rapi, terstruktur.</p>
+
+    <div class="dest-chips">
+      <div class="dest-chip">🏖️ Hospitality &amp; Tourism</div>
+      <div class="dest-chip">🗺️ Travel Services</div>
+      <div class="dest-chip">🍽️ Food &amp; Beverage</div>
+      <div class="dest-chip">🏨 Hotel Management</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-n">12<b>+</b></div><div class="stat-l">Mata Pelajaran</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--gold3);">3</div><div class="stat-l">Kelompok Mapel</div></div>
+      <div class="stat"><div class="stat-n">2026</div><div class="stat-l">Tahun Pelajaran</div></div>
+    </div>
+  </div>
+
+  <div class="wave">
+    <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,36 C240,72 480,0 720,36 C900,60 1080,8 1260,34 C1340,46 1400,22 1440,36 L1440,72 L0,72 Z" fill="#F7F3EC"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- DATA SISWA -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-tag tag-gold">🗺️ Data Administrasi</div>
+      <h2 class="sec-title">Data Siswa Kelas X ULP</h2>
+      <p class="sec-desc">Halaman khusus Wali Kelas untuk menginput dan mengelola data lengkap siswa — profil, absensi, dan catatan administratif.</p>
+    </div>
+
+    <div class="data-hero">
+      <div class="data-hero-text">
+        <div class="data-hero-badge">🔐 Input Data — Wali Kelas</div>
+        <div class="data-hero-title">Database Siswa<br><em>X ULP 2025/2026</em></div>
+        <div class="data-hero-sub">Wali Kelas dapat menginput dan memperbarui data lengkap seluruh siswa — termasuk profil, NIS, NISN, JK, Agama, dan keterangan lainnya.</div>
+        <div class="data-hero-actions">
+          <button class="btn-data" onclick="openModal()">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="12" height="8" rx="2"/><path d="M5 7V5a3 3 0 0 1 6 0v2"/></svg>
+            Buka Data Siswa
+          </button>
+          <div class="data-hero-note">🔑 Khusus Wali Kelas</div>
+        </div>
+      </div>
+      <div class="data-hero-visual">
+        <div class="big-icon">🗺️</div>
+        <div class="vis-label">Data Siswa</div>
+      </div>
+    </div>
+
+    <!-- Destination theme strip -->
+    <div class="dest-banner">
+      <div class="dest-item" style="--gradient:linear-gradient(90deg,var(--teal),var(--teal2));">
+        <div class="dest-emoji">🏖️</div>
+        <div class="dest-label">Wisata Alam</div>
+      </div>
+      <div class="dest-item" style="--gradient:linear-gradient(90deg,var(--palm),var(--palm2));">
+        <div class="dest-emoji">🏛️</div>
+        <div class="dest-label">Wisata Budaya</div>
+      </div>
+      <div class="dest-item" style="--gradient:linear-gradient(90deg,var(--gold),var(--gold2));">
+        <div class="dest-emoji">🍽️</div>
+        <div class="dest-label">Kuliner</div>
+      </div>
+      <div class="dest-item" style="--gradient:linear-gradient(90deg,var(--coral),var(--coral2));">
+        <div class="dest-emoji">🏨</div>
+        <div class="dest-label">Perhotelan</div>
+      </div>
+      <div class="dest-item" style="--gradient:linear-gradient(90deg,var(--ocean),var(--ocean2));">
+        <div class="dest-emoji">✈️</div>
+        <div class="dest-label">Perjalanan</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NILAI MAPEL -->
+  <section class="sec sec-last">
+    <div class="sec-head">
+      <div class="sec-tag tag-ocean">📚 Kurikulum Merdeka</div>
+      <h2 class="sec-title">Nilai Mata Pelajaran</h2>
+      <p class="sec-desc">Setiap guru dapat membuka halaman nilai sesuai mata pelajaran yang diampu. <strong style="color:var(--teal);">Klik ✏️ pada kartu untuk menambahkan atau mengubah link.</strong></p>
+    </div>
+
+    <div class="group-div">
+      <div class="group-div-icon" style="background:var(--ocean-bg);">🎓</div>
+      Mata Pelajaran Umum
+    </div>
+    <div class="subj-grid" id="grid-umum"></div>
+
+    <div class="group-div">
+      <div class="group-div-icon" style="background:var(--palm-bg);">🌴</div>
+      Mata Pelajaran Kejuruan
+    </div>
+    <div class="subj-grid" id="grid-kejuruan"></div>
+
+    <div class="group-div">
+      <div class="group-div-icon" style="background:#EFF6EF;">🌿</div>
+      Mata Pelajaran Muatan Lokal
+    </div>
+    <div class="subj-grid" id="grid-mulok"></div>
+
+    <div class="group-div">
+      <div class="group-div-icon" style="background:#FDF5DA;">📒</div>
+      Ledger &amp; Rekap
+    </div>
+    <div class="subj-grid" id="grid-ledger"></div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="footer-logo">ULP</div>
+  <strong>Kelas X Usaha Layanan Pariwisata</strong>
+  <div class="footer-divider"></div>
+  Portal Akademik Guru · Tahun Pelajaran 2025/2026<br>
+  <span style="font-size:11px;opacity:.5;">Data Siswa — input &amp; kelola oleh Wali Kelas · Input Nilai — terbuka untuk semua guru mata pelajaran</span>
+</footer>
+
+<script>
+const PASS = 'SMKBisa';
+const DATA_URL = 'https://alex-bahy.github.io/Data-siswa-XULP-2026/';
+const SK = 'xulp_mapel_links_v1';
+
+/*
+  ╔═══════════════════════════════════════════════════════╗
+  ║  LINK PERMANEN — berlaku di SEMUA perangkat           ║
+  ║  Format:  'ID_MAPEL' : 'https://link-github-pages/'  ║
+  ╚═══════════════════════════════════════════════════════╝
+*/
+const DEFAULTS = {
+  '01': 'https://alex-bahy.github.io/Agama-XULP-2026/',
+  '02': 'https://alex-bahy.github.io/Pend.-Pancasila-XULP-2026/',
+  '03': 'https://alex-bahy.github.io/B.-Indonesia-XULP-2026/',
+  '04': 'https://alex-bahy.github.io/PJOK-XULP-2026/',
+  '05': 'https://alex-bahy.github.io/Sejarah-XULP-2026/',
+  '06': 'https://alex-bahy.github.io/Seni-Budaya-XULP-2026/',
+  '07': 'https://alex-bahy.github.io/Matematika-XULP-2026/',
+  '08': 'https://alex-bahy.github.io/B.-Inggris-XULP-2026/',
+  '09': 'https://alex-bahy.github.io/Informatika-XULP-2026/',
+  '10': 'https://alex-bahy.github.io/Projek-IPAS-XULP-2026/',
+  '12': 'https://alex-bahy.github.io/Dasar-Program-Keahlian-XULP-2026/',
+  '11': 'https://alex-bahy.github.io/Muatan-Lokal-XULP-2026/',
+  'L1': 'https://alex-bahy.github.io/Ledger-XULP-2026/',
+};
+
+const SUBJECTS = {
+  umum: [
+    { id:'01', name:'Pendidikan Agama dan Budi Pekerti',          type:'Mapel Umum',     cls:'card-u' },
+    { id:'02', name:'Pendidikan Pancasila',                       type:'Mapel Umum',     cls:'card-u' },
+    { id:'03', name:'Bahasa Indonesia',                           type:'Mapel Umum',     cls:'card-u' },
+    { id:'04', name:'Pendidikan Jasmani, Olahraga dan Kesehatan', type:'Mapel Umum',     cls:'card-u' },
+    { id:'05', name:'Sejarah',                                    type:'Mapel Umum',     cls:'card-u' },
+    { id:'06', name:'Seni Budaya',                                type:'Mapel Umum',     cls:'card-u' },
+  ],
+  kejuruan: [
+    { id:'07', name:'Matematika',                                 type:'Mapel Kejuruan', cls:'card-k' },
+    { id:'08', name:'Bahasa Inggris',                             type:'Mapel Kejuruan', cls:'card-k' },
+    { id:'09', name:'Informatika',                                type:'Mapel Kejuruan', cls:'card-k' },
+    { id:'10', name:'Projek Ilmu Pengetahuan Alam dan Sosial',    type:'Mapel Kejuruan', cls:'card-k' },
+    { id:'12', name:'Dasar-Dasar Program Keahlian Pariwisata',    type:'Mapel Kejuruan', cls:'card-k' },
+  ],
+  mulok: [
+    { id:'11', name:'Muatan Lokal',                               type:'Muatan Lokal',   cls:'card-k', mulok:true },
+  ],
+  ledger: [
+    { id:'L1', name:'Ledger Nilai — Rekap Semua Mata Pelajaran',  type:'Ledger & Rekap', cls:'card-l', ledger:true },
+  ]
+};
+
+function buildCard(s) {
+  const ns  = s.mulok  ? 'background:#EFF6EF;color:#2D6A4F;' : '';
+  const ts  = s.mulok  ? 'color:#2D6A4F;' : '';
+  const ph  = s.ledger ? 'https://username.github.io/Ledger-XULP/' : 'https://username.github.io/nama-repo/';
+  const lbl = s.ledger ? 'Buka Ledger' : 'Input Nilai';
+  const num = s.ledger ? '📒' : s.id;
+  return `<div class="subj-card ${s.cls}" id="card-${s.id}">
+<button class="card-edit-btn" onclick="toggleEdit('${s.id}')" aria-label="Edit link">✏️</button>
+<div class="card-row">
+  <div class="card-num" style="${ns}">${num}</div>
+  <div class="card-info">
+    <div class="card-name">${s.name}</div>
+    <div class="card-type" style="${ts}">${s.type}</div>
+  </div>
+</div>
+<div class="edit-panel" id="edit-${s.id}">
+  <label>🔗 Link GitHub Pages</label>
+  <div class="edit-panel-row">
+    <input type="url" class="edit-inp" id="inp-${s.id}" placeholder="${ph}">
+    <button class="edit-save-btn" onclick="saveLink('${s.id}')">Simpan</button>
+    <button class="edit-clear-btn" onclick="clearLink('${s.id}')">✕</button>
+  </div>
+  <div class="edit-hint">Paste link GitHub Pages — tombol Input Nilai akan langsung aktif.</div>
+</div>
+<div class="card-foot">
+  <a href="#" class="link-btn link-off" id="btn-${s.id}" target="_blank" rel="noopener">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
+    ${lbl}
+  </a>
+  <span class="badge badge-off" id="badge-${s.id}">Segera</span>
+</div>
+</div>`;
+}
+
+function renderAll() {
+  Object.entries(SUBJECTS).forEach(([g, list]) => {
+    const el = document.getElementById('grid-' + g);
+    if (el) el.innerHTML = list.map(buildCard).join('');
+  });
+}
+
+function loadLinks()  { try { return JSON.parse(localStorage.getItem(SK) || '{}'); } catch(e) { return {}; } }
+function saveLinks(d) { try { localStorage.setItem(SK, JSON.stringify(d)); } catch(e) {} }
+
+function applyLink(id, url) {
+  const b  = document.getElementById('btn-'   + id);
+  const ba = document.getElementById('badge-' + id);
+  if (!b || !ba) return;
+  if (url) {
+    b.href = url; b.className = 'link-btn link-on';
+    b.style.pointerEvents = ''; b.style.cursor = '';
+    ba.textContent = 'Aktif ✓'; ba.className = 'badge badge-on';
+  } else {
+    b.href = '#'; b.className = 'link-btn link-off';
+    b.style.pointerEvents = 'none'; b.style.cursor = 'not-allowed';
+    ba.textContent = 'Segera'; ba.className = 'badge badge-off';
+  }
+}
+
+function toggleEdit(id) {
+  const p = document.getElementById('edit-' + id);
+  const i = document.getElementById('inp-'  + id);
+  const was = p.classList.contains('open');
+  document.querySelectorAll('.edit-panel.open').forEach(x => x.classList.remove('open'));
+  if (!was) {
+    p.classList.add('open');
+    const l = loadLinks();
+    i.value = l[id] || DEFAULTS[id] || '';
+    setTimeout(() => i.focus(), 60);
+  }
+  i.onkeydown = e => {
+    if (e.key === 'Enter')  saveLink(id);
+    if (e.key === 'Escape') p.classList.remove('open');
+  };
+}
+
+function saveLink(id) {
+  const i = document.getElementById('inp-' + id);
+  let u = i.value.trim();
+  if (!u) { showToast('⚠️ Link tidak boleh kosong.'); return; }
+  if (!u.startsWith('http')) { u = 'https://' + u; i.value = u; }
+  const l = loadLinks(); l[id] = u; saveLinks(l);
+  applyLink(id, u);
+  document.getElementById('edit-' + id).classList.remove('open');
+  showPermanentInfo(id, u);
+}
+
+function showPermanentInfo(id, url) {
+  const old = document.getElementById('perm-banner'); if (old) old.remove();
+  const snip = "'" + id + "':'" + url + "',";
+  const banner = document.createElement('div');
+  banner.id = 'perm-banner';
+  banner.style.cssText = 'position:fixed;top:74px;left:50%;transform:translateX(-50%);z-index:400;background:#fff;border:1.5px solid var(--teal,#0D5C63);border-radius:16px;padding:14px 18px;max-width:92vw;width:480px;box-shadow:0 8px 32px rgba(13,92,99,.18);font-family:Jost,sans-serif;';
+  banner.innerHTML = '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;"><div style="font-size:13px;font-weight:700;color:#1A2A24;">⚠️ Link aktif di perangkat ini saja</div><button onclick="document.getElementById(\'perm-banner\').remove()" style="background:none;border:none;cursor:pointer;font-size:16px;color:#999;flex-shrink:0;line-height:1;">✕</button></div><div style="font-size:12px;color:#5A7070;line-height:1.65;margin-bottom:10px;">Agar link aktif di <strong style="color:#1A2A24">semua HP/laptop</strong>, tambahkan baris ini ke bagian <code style="background:#E6F4F8;padding:1px 5px;border-radius:4px;font-size:11px;">DEFAULTS</code>:</div><div style="display:flex;align-items:center;gap:8px;"><code id="snip-code" style="flex:1;background:#E6F4F8;border:1px solid #C0DDE4;border-radius:8px;padding:8px 12px;font-size:12px;color:#0D5C63;word-break:break-all;">' + snip + '</code><button onclick="navigator.clipboard.writeText(document.getElementById(\'snip-code\').textContent).then(()=>showToast(\'✅ Disalin!\'))" style="background:#0D5C63;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;">Salin</button></div>';
+  document.body.appendChild(banner);
+  setTimeout(() => { if (banner.parentNode) banner.remove(); }, 14000);
+}
+
+function clearLink(id) {
+  const l = loadLinks(); delete l[id]; saveLinks(l);
+  applyLink(id, DEFAULTS[id] || null);
+  if (DEFAULTS[id]) { const i = document.getElementById('inp-' + id); if (i) i.value = DEFAULTS[id]; }
+  document.getElementById('edit-' + id).classList.remove('open');
+  showToast('🗑️ Link dihapus, kembali ke default.');
+}
+
+/* ── MODAL ── */
+function openModal()  { document.getElementById('modal').classList.add('open'); setTimeout(() => document.getElementById('pwInput').focus(), 200); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); document.getElementById('pwInput').value = ''; document.getElementById('modalErr').classList.remove('show'); }
+function togglePw()   { const i = document.getElementById('pwInput'), b = document.getElementById('eyeBtn'); i.type = i.type === 'password' ? 'text' : 'password'; b.textContent = i.type === 'password' ? '👁' : '🙈'; }
+function tryUnlock() {
+  const v = document.getElementById('pwInput').value, e = document.getElementById('modalErr');
+  if (v === PASS) { closeModal(); window.open(DATA_URL, '_blank'); }
+  else { e.classList.remove('show'); void e.offsetWidth; e.classList.add('show'); document.getElementById('pwInput').value = ''; document.getElementById('pwInput').focus(); }
+}
+document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ── TOAST ── */
+let tt;
+function showToast(m) {
+  const t = document.getElementById('toast');
+  t.textContent = m; t.classList.add('show');
+  clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+/* ── INIT ── */
+renderAll();
+Object.entries(DEFAULTS).forEach(([id, url]) => applyLink(id, url));
+Object.entries(loadLinks()).forEach(([id, url]) => applyLink(id, url));
+
+/* ── SCROLL ANIMATION ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, idx) => {
+    if (e.isIntersecting) {
+      e.target.style.transition = `opacity .45s ease ${idx * .05}s, transform .45s ease ${idx * .05}s, box-shadow .2s, border-color .2s`;
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('.subj-card').forEach(c => obs.observe(c));
+</script>
+</body>
+</html>
